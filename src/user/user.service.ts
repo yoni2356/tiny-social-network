@@ -1,15 +1,22 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
+import { InjectConnection } from 'nest-knexjs';
+import { Knex } from 'knex';
+import { User } from './entities/user.entity';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectKnex() private readonly knex: Knex) {}
+  constructor(@InjectConnection() private readonly knex: Knex) {}
 
-  create(createUserDto: CreateUserDto) {
-    return this.knex('users').insert(createUserDto).returning('*');
+  async create(createUserDto: CreateUserDto): Promise<User> {
+    const [createdUser] = await this.knex('users')
+      .insert(createUserDto)
+      .returning('*');
+
+    return createdUser;
   }
 
-  findOne(id: number) {
-    return this.knex('users').where({ id }).first();
+  async findOne(id: number) {
+    return await this.knex('users').where({ id }).first();
   }
 }
