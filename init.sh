@@ -1,10 +1,9 @@
 #!/bin/sh
 
 # Wait for the database to be ready
-until nc -z -v -w30 db 5432; do
-  echo "Waiting for database..."
-  sleep 2
-done
+./wait-for-it.sh db:5432 -- echo "Database is ready"
+
+npm run migrate
 
 # Check if the database is already seeded
 if [ ! -f /var/lib/postgresql/data/seeded ]; then
@@ -15,4 +14,3 @@ fi
 
 # Start the application
 npm run start:prod
-
