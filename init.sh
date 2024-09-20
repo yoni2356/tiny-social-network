@@ -13,4 +13,4 @@ if [ ! -f /var/lib/postgresql/data/seeded ]; then
 fi
 
 # Start the application
-npm run start:prod
+npm start
