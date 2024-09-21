@@ -10,9 +10,9 @@ export async function up(knex: Knex): Promise<void> {
         .createTable('articles', (table) => {
             table.increments('id').primary();
             table.integer('author_id').references('users.id').onDelete('CASCADE');
+            table.text('title').notNullable();
             table.text('body').notNullable();
             table.specificType('tsvector_body', 'tsvector');
-            table.timestamps(true, true);
         })
         .createTable('comments', (table) => {
             table.increments('id').primary();

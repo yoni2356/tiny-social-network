@@ -3,13 +3,14 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { InjectConnection } from 'nest-knexjs';
 import { Knex } from 'knex';
 import { User } from './entities/user.entity';
+import { DATABASE_NAMES } from 'src/common/constants';
 
 @Injectable()
 export class UserService {
   constructor(@InjectConnection() private readonly knex: Knex) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    const [createdUser] = await this.knex('users')
+    const [createdUser] = await this.knex(DATABASE_NAMES.USERS)
       .insert(createUserDto)
       .returning('*');
 
@@ -17,6 +18,6 @@ export class UserService {
   }
 
   async findOne(id: number) {
-    return await this.knex('users').where({ id }).first();
+    return await this.knex(DATABASE_NAMES.USERS).where({ id }).first();
   }
 }
