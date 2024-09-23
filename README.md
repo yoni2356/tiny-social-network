@@ -12,3 +12,7 @@
 
 - docker installed
 - port 3000 available on host machine
+
+## Also included
+
+- [Thunder](https://www.thunderclient.com/) collection, import into vs-code for your comfort
