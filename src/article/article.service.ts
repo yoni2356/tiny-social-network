@@ -3,7 +3,7 @@ import { CreateArticleDto } from './dto/create-article.dto';
 import { InjectConnection } from 'nest-knexjs';
 import { Knex } from 'knex';
 import { Article } from './entities/article.entity';
-import { DATABASE_NAMES } from 'src/common/constants';
+import { TABLES } from 'src/common/constants';
 
 @Injectable()
 export class ArticleService {
@@ -12,7 +12,7 @@ export class ArticleService {
   async create(createArticleDto: CreateArticleDto): Promise<Article> {
     try {
       const { body, author_id, title } = createArticleDto;
-      const [createdArticle] = await this.knex(DATABASE_NAMES.ARTICLES)
+      const [createdArticle] = await this.knex(TABLES.ARTICLES)
         .insert({
           author_id,
           title,
@@ -31,8 +31,7 @@ export class ArticleService {
 
   async findOne(id: number): Promise<Article> {
     try {
-      const article = await this.knex(DATABASE_NAMES.ARTICLES).where({ id }).first();
-
+      const article = await this.knex(TABLES.ARTICLES).where({ id }).first();
       if (!article) {
         throw new NotFoundException('Article not found');
       }
@@ -50,7 +49,7 @@ export class ArticleService {
   }[]> {
     try {
       const query = words.join(' | ');
-      const articles: Article[] = await this.knex(DATABASE_NAMES.ARTICLES)
+      const articles: Article[] = await this.knex(TABLES.ARTICLES)
         .whereRaw('tsvector_body @@ plainto_tsquery(?)', [query]);
 
       return articles.map((article) => {
@@ -72,6 +71,26 @@ export class ArticleService {
     catch (err) {
       console.error(err);
       throw new InternalServerErrorException('Article find by words failed')
+    }
+  }
+
+  async findByMostCommonWord(word: string): Promise<{ article_id: number }> {
+    try {
+      const article: Article = await this.knex(TABLES.ARTICLES)
+        .whereRaw('tsvector_body @@ plainto_tsquery(?)', [word])
+        .orderByRaw('ts_rank_cd(tsvector_body, plainto_tsquery(?)) DESC', [word])
+        .limit(1)
+        .first();
+
+      if (!article) {
+        throw new NotFoundException('No article contains this word');
+      }
+
+      return { article_id: article.id };
+    }
+    catch (err) {
+      console.error(err);
+      throw new InternalServerErrorException('Article find failed')
     }
   }
 }

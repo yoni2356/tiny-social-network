@@ -1,6 +1,6 @@
 import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { CreateCommentDto } from './dto/create-comment.dto';
-import { DATABASE_NAMES } from 'src/common/constants';
+import { TABLES } from 'src/common/constants';
 import { InjectConnection } from 'nest-knexjs';
 import { Knex } from 'knex';
 
@@ -11,7 +11,7 @@ export class CommentService {
   async create(createCommentDto: CreateCommentDto): Promise<Comment> {
     try {
       const { user_id, article_id, content } = createCommentDto;
-      const [createdComment] = await this.knex(DATABASE_NAMES.COMMENTS)
+      const [createdComment] = await this.knex(TABLES.COMMENTS)
         .insert({
           user_id,
           article_id,
@@ -29,7 +29,7 @@ export class CommentService {
 
   async findOne(id: number): Promise<Comment> {
     try {
-      const comment = await this.knex(DATABASE_NAMES.COMMENTS)
+      const comment = await this.knex(TABLES.COMMENTS)
         .where({ id })
         .first();
 
