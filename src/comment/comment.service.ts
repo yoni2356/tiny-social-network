@@ -1,21 +1,47 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { CreateCommentDto } from './dto/create-comment.dto';
+import { DATABASE_NAMES } from 'src/common/constants';
+import { InjectConnection } from 'nest-knexjs';
+import { Knex } from 'knex';
 
 @Injectable()
 export class CommentService {
-  create(createCommentDto: CreateCommentDto) {
-    return 'This action adds a new comment';
+  constructor(@InjectConnection() private readonly knex: Knex) { }
+
+  async create(createCommentDto: CreateCommentDto): Promise<Comment> {
+    try {
+      const { user_id, article_id, content } = createCommentDto;
+      const [createdComment] = await this.knex(DATABASE_NAMES.COMMENTS)
+        .insert({
+          user_id,
+          article_id,
+          content,
+        })
+        .returning('*');
+
+      return createdComment;
+    }
+    catch (err) {
+      console.error(err);
+      throw new InternalServerErrorException('Comment creation failed');
+    }
   }
 
-  findAll() {
-    return `This action returns all comment`;
-  }
+  async findOne(id: number): Promise<Comment> {
+    try {
+      const comment = await this.knex(DATABASE_NAMES.COMMENTS)
+        .where({ id })
+        .first();
 
-  findOne(id: number) {
-    return `This action returns a #${id} comment`;
-  }
+      if (!comment) {
+        throw new NotFoundException('Comment not found');
+      }
 
-  remove(id: number) {
-    return `This action removes a #${id} comment`;
+      return comment;
+    }
+    catch (err) {
+      console.error(err);
+      throw new InternalServerErrorException('Comment find failed')
+    }
   }
 }
