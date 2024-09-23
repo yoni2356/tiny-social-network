@@ -12,7 +12,7 @@ export class ArticleService {
   async create(createArticleDto: CreateArticleDto): Promise<Article> {
     try {
       const { body, author_id, title } = createArticleDto;
-      const [createdArticle] = await this.knex(TABLES.ARTICLES)
+      const [{ tsvector_body, ...createdArticle }] = await this.knex<Article & { tsvector_body: string }>(TABLES.ARTICLES)
         .insert({
           author_id,
           title,
@@ -52,7 +52,7 @@ export class ArticleService {
   }[]> {
     try {
       const query = words.join(' | ');
-      const articles: Article[] = await this.knex(TABLES.ARTICLES)
+      const articles = await this.knex<Article>(TABLES.ARTICLES)
         .whereRaw('tsvector_body @@ plainto_tsquery(?)', [query]);
 
       return articles.map((article) => {
@@ -79,7 +79,7 @@ export class ArticleService {
 
   async findByMostCommonWord(word: string): Promise<{ article_id: number }> {
     try {
-      const article: Article = await this.knex(TABLES.ARTICLES)
+      const article = await this.knex<Article>(TABLES.ARTICLES)
         .whereRaw('tsvector_body @@ plainto_tsquery(?)', [word])
         .orderByRaw('ts_rank_cd(tsvector_body, plainto_tsquery(?)) DESC', [word])
         .limit(1)
