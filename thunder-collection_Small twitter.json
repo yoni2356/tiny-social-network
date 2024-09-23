@@ -1,0 +1,115 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "Small twitter",
+    "collectionId": "5fd888b4-0e24-4d2d-aa51-d51b58b00493",
+    "dateExported": "2024-09-23T12:38:39.712Z",
+    "version": "1.2",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "89f4ec80-9b88-44c1-8f1d-7312b0f0564c",
+            "colId": "5fd888b4-0e24-4d2d-aa51-d51b58b00493",
+            "containerId": "",
+            "name": "Get user",
+            "url": "http://localhost:3000/user/1",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2024-09-23T10:11:47.723Z",
+            "modified": "2024-09-23T11:29:12.195Z",
+            "headers": []
+        },
+        {
+            "_id": "b52b2b89-7c3a-4047-bc51-c72d473e5c11",
+            "colId": "5fd888b4-0e24-4d2d-aa51-d51b58b00493",
+            "containerId": "",
+            "name": "Get article",
+            "url": "http://localhost:3000/article/1",
+            "method": "GET",
+            "sortNum": 25000,
+            "created": "2024-09-23T10:51:47.113Z",
+            "modified": "2024-09-23T12:11:38.872Z",
+            "headers": []
+        },
+        {
+            "_id": "e241c6b0-210c-457b-a24c-9ba557fe831b",
+            "colId": "5fd888b4-0e24-4d2d-aa51-d51b58b00493",
+            "containerId": "",
+            "name": "Create article",
+            "url": "http://localhost:3000/article",
+            "method": "POST",
+            "sortNum": 32500,
+            "created": "2024-09-23T10:14:28.103Z",
+            "modified": "2024-09-23T12:12:05.388Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"author_id\": 1,\n  \"title\": \"The gibberish 2\",\n  \"body\": \"There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "33ffb580-ad9e-4502-a814-499cbb08ec07",
+            "colId": "5fd888b4-0e24-4d2d-aa51-d51b58b00493",
+            "containerId": "",
+            "name": "Find words",
+            "url": "http://localhost:3000/article/find-words",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2024-09-23T10:29:04.527Z",
+            "modified": "2024-09-23T12:08:58.941Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"words\": [\"embarrassing\", \"passages\"]\n}\n",
+                "form": []
+            }
+        },
+        {
+            "_id": "395d2228-0d89-402d-80c6-4fb0d1dfc746",
+            "colId": "5fd888b4-0e24-4d2d-aa51-d51b58b00493",
+            "containerId": "",
+            "name": "Get comment",
+            "url": "http://localhost:3000/comment/1",
+            "method": "GET",
+            "sortNum": 45000,
+            "created": "2024-09-23T10:48:33.854Z",
+            "modified": "2024-09-23T12:13:14.897Z",
+            "headers": []
+        },
+        {
+            "_id": "e345117c-10ba-4cdd-8ac7-a136807f17d8",
+            "colId": "5fd888b4-0e24-4d2d-aa51-d51b58b00493",
+            "containerId": "",
+            "name": "Create comment",
+            "url": "http://localhost:3000/comment",
+            "method": "POST",
+            "sortNum": 50000,
+            "created": "2024-09-23T10:46:40.494Z",
+            "modified": "2024-09-23T10:47:39.461Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"user_id\": 2,\n  \"article_id\": 1,\n  \"content\": \"Wow this is a great article. I walked in here I said wow, what a great article..\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "46e86535-19e4-449a-bbfa-b2d3973383a8",
+            "colId": "5fd888b4-0e24-4d2d-aa51-d51b58b00493",
+            "containerId": "",
+            "name": "Find most common",
+            "url": "http://localhost:3000/article/find-most-common-word",
+            "method": "POST",
+            "sortNum": 50000,
+            "created": "2024-09-23T12:09:13.030Z",
+            "modified": "2024-09-23T12:13:01.425Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"word\": \"hello\"\n}\n",
+                "form": []
+            }
+        }
+    ],
+    "ref": "nWGpAVPn4IKDLRQqeU3knoq50TgtcKmrk7zvXeH77P6qMrn2DYEJefVtn2FfOb61puamC1Olk2OX-QaC45-W7w"
+}

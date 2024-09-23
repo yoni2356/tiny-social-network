@@ -10,5 +10,5 @@
 
 ## Prerequesites
 
-- docker support
+- docker installed
 - port 3000 available on host machine
