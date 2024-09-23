@@ -31,7 +31,10 @@ export class ArticleService {
 
   async findOne(id: number): Promise<Article> {
     try {
-      const article = await this.knex(TABLES.ARTICLES).where({ id }).first();
+      const article = await this.knex<Article>(TABLES.ARTICLES)
+        .where({ id })
+        .first();
+
       if (!article) {
         throw new NotFoundException('Article not found');
       }
