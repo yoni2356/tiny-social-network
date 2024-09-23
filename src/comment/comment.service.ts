@@ -28,20 +28,14 @@ export class CommentService {
   }
 
   async findOne(id: number): Promise<Comment> {
-    try {
-      const comment = await this.knex(TABLES.COMMENTS)
-        .where({ id })
-        .first();
+    const comment = await this.knex(TABLES.COMMENTS)
+      .where({ id })
+      .first();
 
-      if (!comment) {
-        throw new NotFoundException('Comment not found');
-      }
+    if (!comment) {
+      throw new NotFoundException('Comment not found');
+    }
 
-      return comment;
-    }
-    catch (err) {
-      console.error(err);
-      throw new InternalServerErrorException('Comment find failed')
-    }
+    return comment;
   }
 }

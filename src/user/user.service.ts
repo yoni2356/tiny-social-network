@@ -23,16 +23,11 @@ export class UserService {
   }
 
   async findOne(id: number): Promise<User> {
-    try {
-      const user = await this.knex(TABLES.USERS).where({ id }).first();
-      if (!user) {
-        throw new NotFoundException('User not found');
-      }
-
-      return user;
-    } catch(err) {
-      console.error(err);
-      throw new InternalServerErrorException('User find failed')
+    const user = await this.knex(TABLES.USERS).where({ id }).first();
+    if (!user) {
+      throw new NotFoundException('User not found');
     }
+
+    return user;
   }
 }
