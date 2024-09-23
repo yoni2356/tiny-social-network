@@ -1,14 +1,11 @@
 import { Knex } from "knex";
 import { Article } from "src/article/entities/article.entity";
-import { TABLES } from "src/common/constants";
 import { User } from "src/user/entities/user.entity";
 
-const ARTICLES_TABLE = TABLES.ARTICLES;
-
 export async function seed(knex: Knex): Promise<void> {
-    await knex(ARTICLES_TABLE).del();
+    await knex('articles').del();
 
-    const users: User[] = await this.knex(TABLES.USERS);
+    const users: User[] = await knex('users');
 
     const articles: Omit<Article, 'id'>[] = [
         {
@@ -21,5 +18,5 @@ export async function seed(knex: Knex): Promise<void> {
     ]
 
     // Inserts seed entries
-    await knex(ARTICLES_TABLE).insert(articles);
+    await knex('articles').insert(articles);
 };
