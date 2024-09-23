@@ -20,4 +20,9 @@ export class ArticleController {
   findArticlesWithWords(@Body('words') words: string[]) {
     return this.articleService.findByWords(words);
   }
+
+  @Post('find-most-common-word')
+  findArticlesWithMostCommonWord(@Body('word') word: string) {
+    return this.articleService.findByMostCommonWord(word);
+  }
 }
