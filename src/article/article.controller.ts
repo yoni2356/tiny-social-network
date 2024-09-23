@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, HttpCode } from '@nestjs/common';
 import { ArticleService } from './article.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 
@@ -17,11 +17,13 @@ export class ArticleController {
   }
 
   @Post('find-words')
+  @HttpCode(200)
   findArticlesWithWords(@Body('words') words: string[]) {
     return this.articleService.findByWords(words);
   }
 
   @Post('find-most-common-word')
+  @HttpCode(200)
   findArticlesWithMostCommonWord(@Body('word') word: string) {
     return this.articleService.findByMostCommonWord(word);
   }
