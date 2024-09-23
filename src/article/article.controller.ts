@@ -15,4 +15,9 @@ export class ArticleController {
   findOne(@Param('id') id: string) {
     return this.articleService.findOne(+id);
   }
+
+  @Post('find-words')
+  findArticlesWithWords(@Body('words') words: string[]) {
+    return this.articleService.findByWords(words);
+  }
 }

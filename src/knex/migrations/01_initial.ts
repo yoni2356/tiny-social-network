@@ -13,6 +13,7 @@ export async function up(knex: Knex): Promise<void> {
             table.text('title').notNullable();
             table.text('body').notNullable();
             table.specificType('tsvector_body', 'tsvector');
+            table.index('tsvector_body', null, 'GIN');
         })
         .createTable('comments', (table) => {
             table.increments('id').primary();
