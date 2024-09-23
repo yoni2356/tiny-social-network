@@ -44,12 +44,12 @@ export class ArticleService {
     return articles.map((article) => {
       const result = {};
       words.forEach((word) => {
-        const offsets: number[] = [];
-        let index = article.body.indexOf(word);
-        while (index !== -1) {
-          offsets.push(index);
-          index = article.body.indexOf(word, index + 1);
-        }
+        // Case-insensitive exact word match
+        const regex = new RegExp(`\\b${word}\\b`, 'gi');
+        const matches = Array.from(article.body.matchAll(regex));
+
+        const offsets = matches.map(match => match.index);
+
         if (offsets.length) {
           result[word] = { article_id: article.id, offsets };
         }
